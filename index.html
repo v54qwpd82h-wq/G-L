@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-Legacy Officiel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #160a2b 0%, #29124a 50%, #0d041a 100%);
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --text-color: #ffffff;
+            --text-muted: #bdaec6;
+            --accent-gradient: linear-gradient(135deg, #7b3ee6, #db52bd);
+            --btn-gradient: linear-gradient(90deg, #7c31e6, #c4379b);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f3edfc 0%, #e3d2fa 100%);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #160a2b;
+            --text-muted: #5c4e6d;
+            --accent-gradient: linear-gradient(135deg, #7c31e6, #c4379b);
+            --btn-gradient: linear-gradient(90deg, #7c31e6, #c4379b);
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        /* --- JESTYON EKRAN YO --- */
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .screen.visible {
+            display: flex;
+        }
+
+        .screen-wide {
+            max-width: 500px;
+        }
+
+        /* --- STIL LOGO AK TIT --- */
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #7b3ee6, #db52bd);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(123, 62, 230, 0.3);
+        }
+
+        .brand-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #b066ff, #ff73e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* BOUTON YO */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn-action {
+            background: var(--btn-gradient);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            filter: brightness(1.1);
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 16px 25px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            outline: none;
+            text-align: center;
+        }
+
+        /* --- DASHBOARD STIL --- */
+        .header-dash {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .welcome-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-round {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* GRID KAT SÈVIS YO */
+        .sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .box-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 22px;
+            text-align: left;
+            backdrop-filter: blur(12px);
+        }
+
+        .box-header {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff73e6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .list-items {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .list-items li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .list-items li i { color: #2ecc71; }
+        
+        .social-icons-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        .social-icons-row .fa-tiktok { color: #ff0050; }
+        .social-icons-row .fa-youtube { color: #ff0000; }
+        .social-icons-row .fa-facebook { color: #1877f2; }
+
+        .price-box {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 18px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* SONDAY WHATSAPP STYLE */
+        .poll-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .poll-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .poll-radio { display: none; }
+
+        .poll-label {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            padding: 10px 5px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .poll-radio:checked + .poll-label {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* FÒMILÈ TRAVAY STIL */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .form-element label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+        .form-select option { background: #23123d; color: white; }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 22px;
+            height: 22px;
+            accent-color: #db52bd;
+            cursor: pointer;
+        }
+
+        /* POPUP MODAL PEMAN AVANSE */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-card {
+            background: #190a2e;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+        
+        .payment-methods-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .pay-option-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        
+        .pay-option-btn:hover {
+            border-color: #ff73e6;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* BLÒK ENFÒMASYON PEMAN DETAYE */
+        .payment-details-box {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed #ff73e6;
+            padding: 15px;
+            border-radius: 16px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .payment-details-box h4 {
+            color: #ff73e6;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-value {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            display: block;
+            margin: 8px 0;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* TI BOUTON WHATSAPP FLOATING PDG */
+        .pdg-float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25d366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scr-lang" class="screen visible">
+        <div class="logo-circle">GL</div>
+        <h1 class="brand-title">G-Legacy</h1>
+        <p class="subtitle">Choose your language to start your digital experience.</p>
+        <div class="btn-group">
+            <button class="btn-action" onclick="changeLanguage('kr')">🇭🇹 Kreyòl</button>
+            <button class="btn-action" onclick="changeLanguage('fr')">🇫🇷 Français</button>
+            <button class="btn-action" onclick="changeLanguage('en')">🇺🇸 English</button>
+        </div>
+    </div>
+
+    <div id="scr-login" class="screen">
+        <div class="logo-circle">GL</div>
+        <h2 id="login-heading" style="margin-bottom: 25px;">Kreye Kont Ou</h2>
+        <input type="text" id="user-name-input" class="input-control" placeholder="Ekri non ou la...">
+        <button class="btn-action" onclick="handleLogin()"><i class="fa-solid fa-right-to-bracket"></i> Antre nan sit la</button>
+    </div>
+
+    <div id="scr-dash" class="screen screen-wide">
+        <div class="header-dash">
+            <div class="welcome-title" id="welcome-msg">Bienvenue...</div>
+            <div class="top-actions">
+                <button class="btn-round" onclick="changeTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+            </div>
+        </div>
+
+        <div class="sections-container">
+            
+            <div class="box-card">
+                <div class="box-header"><i class="fa-solid fa-graduation-cap"></i> <span id="lbl-cours">Cours en Ligne</span></div>
+                <ul class="list-items">
+                    <li><i class="fa-solid fa-circle-check"></i> Kreye Tikomik</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Kreye Application</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Kreye Site Web</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Kreye Video ak AI</li>
+                </ul>
+                <div class="price-box">$30 USD</div>
+                <button class="btn-action" onclick="openPaymentModal('Cours en Ligne', '30 USD')"><i class="fa-solid fa-cart-shopping"></i> <span class="txt-acht">Achte</span></button>
+            </div>
+
+            <div class="box-card">
+                <div class="box-header"><i class="fa-solid fa-rocket"></i> <span id="lbl-booster">Booster Paj</span></div>
+                <div class="social-icons-row">
+                    <i class="fa-brands fa-tiktok"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                    <i class="fa-brands fa-facebook"></i>
+                </div>
+                <ul class="list-items">
+                    <li><i class="fa-solid fa-circle-check"></i> Sèvis rapid ak pwofesyonèl</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Jwenn 10k abòne reyèl</li>
+                </ul>
+                <div class="price-box">$70 USD / 10k</div>
+                <button class="btn-action" onclick="openPaymentModal('Booster Paj (10k Followers)', '70 USD')"><i class="fa-solid fa-cart-shopping"></i> <span class="txt-acht">Achte</span></button>
+            </div>
+
+            <div class="box-card">
+                <div class="box-header"><i class="fa-brands fa-whatsapp"></i> <span id="lbl-wa">Chèn & Followers</span></div>
+                <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">Chwazi kantite abòne ou vle kòmande:</p>
+                
+                <div class="poll-box">
+                    <div class="poll-options">
+                        <input type="radio" name="qty" id="q1" value="1k" class="poll-radio" checked>
+                        <label for="q1" class="poll-label">1k</label>
+                        
+                        <input type="radio" name="qty" id="q2" value="2k" class="poll-radio">
+                        <label for="q2" class="poll-label">2k</label>
+
+                        <input type="radio" name="qty" id="q3" value="10k" class="poll-radio">
+                        <label for="q3" class="poll-label">10k</label>
+
+                        <input type="radio" name="qty" id="q4" value="20k" class="poll-radio">
+                        <label for="q4" class="poll-label">20k</label>
+
+                        <input type="radio" name="qty" id="q5" value="50k" class="poll-radio">
+                        <label for="q5" class="poll-label">50k</label>
+
+                        <input type="radio" name="qty" id="q6" value="100k+" class="poll-radio">
+                        <label for="q6" class="poll-label">100k+</label>
+                    </div>
+                </div>
+                <button class="btn-action" onclick="openWAPayment()"><i class="fa-solid fa-cart-shopping"></i> <span class="txt-acht">Achte</span></button>
+            </div>
+
+            <div class="box-card">
+                <div class="box-header"><i class="fa-solid fa-briefcase"></i> <span id="lbl-travay">Espas Travay & Afilyasyon</span></div>
+                
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="form-element">
+                            <label>Laj ou?</label>
+                            <input type="text" id="job-age" class="form-input" placeholder="Eg: 22">
+                        </div>
+                        <div class="form-element">
+                            <label>Sèks ou?</label>
+                            <select id="job-sex" class="form-select">
+                                <option value="Gason">Gason</option>
+                                <option value="Fi">Fi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        <label>Kote ou rete?</label>
+                        <input type="text" id="job-loc" class="form-input" placeholder="Eg: Delmas, Pétion-Ville...">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-element">
+                            <label>Kilè ou dispo?</label>
+                            <select id="job-time" class="form-select">
+                                <option value="Maten">Maten</option>
+                                <option value="Aswè">Aswè</option>
+                                <option value="Tout jounen">Tout jounen</option>
+                            </select>
+                        </div>
+
+                        <div class="form-element">
+                            <label>Kijan ou vle touche?</label>
+                            <select id="job-pay" class="form-select">
+                                <option value="Natcash">Natcash</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-element">
+                        <label style="font-weight:bold; color:#ff73e6; margin-bottom:8px;">Kisa ou vle fè? (Chwazi miltip)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="job-choice" value="Afilyasyon">
+                                <span>Afilyasyon (Envite Moun)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="job-choice" value="Moderatè">
+                                <span>Moderatè sou Paj Sosyal</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="job-choice" value="Kreyatè Kontni">
+                                <span>Kreyatè Kontni / Editè Video</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-action" style="background: #27ae60; margin-top:15px;" onclick="sendJobForm()"><i class="fa-solid fa-paper-plane"></i> Voye I ale</button>
+            </div>
+
+        </div>
+    </div>
+
+    <a href="https://wa.me/19043181164?text=Bonjou%20G-Legacy%2C%20mwen%20beswen%20yon%20enfòmasyon." target="_blank" class="pdg-float-btn" title="Kontakte G-Legacy">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div id="modal-payment" class="modal-bg">
+        <div class="modal-card">
+            <div class="modal-top">
+                <span>Metòd Peman</span>
+                <span style="cursor:pointer; font-size:1.5rem;" onclick="closePaymentModal()">&times;</span>
+            </div>
+            <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:15px;" id="payment-details-text">Chwazi fason pou peye</p>
+            
+            <div class="payment-methods-grid">
+                <button class="pay-option-btn" onclick="showPaymentInfo('Natcash')">
+                    <span>Peye ak Natcash</span>
+                    <span style="background:#e67e22; color:white; padding:3px 8px; border-radius:6px; font-size:0.8rem; font-weight:900;">NATCASH</span>
+                </button>
+                
+                <button class="pay-option-btn" onclick="showPaymentInfo('PayPal')">
+                    <span>Peye ak PayPal</span>
+                    <span style="color:#003087; background:white; padding:3px 8px; border-radius:6px; font-size:0.8rem; font-weight:900;"><i class="fa-brands fa-paypal"></i> PayPal</span>
+                </button>
+
+                <button class="pay-option-btn" onclick="showPaymentInfo('Card')">
+                    <span>Visa / MasterCard</span>
+                    <span style="color:white; background:#1e3799; padding:3px 8px; border-radius:6px; font-size:0.8rem; font-weight:900;"><i class="fa-solid fa-credit-card"></i> Card</span>
+                </button>
+            </div>
+
+            <div id="info-payment-box" class="payment-details-box">
+                <h4 id="info-title">Detay</h4>
+                <p id="info-instructions" style="font-size: 0.9rem; color: var(--text-muted);"></p>
+                <div id="info-target" class="info-value"></div>
+                <p style="font-size: 0.85rem; color: #2ecc71; margin-top: 5px; font-weight: bold;">
+                    ⚠️ Lè ou fin fè transfè a, klike sou bouton anba a pou voye prèv la ban nou sou WhatsApp!
+                </p>
+                <button class="btn-action" style="margin-top: 12px; background: #25d366; font-size: 0.95rem; padding: 10px;" onclick="confirmOrderWithWhatsApp()">
+                    <i class="fa-brands fa-whatsapp"></i> Voye Prèv la sou WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'kr';
+        let username = 'Kliyan';
+        let selectedProduct = '';
+        let selectedPrice = '';
+        let selectedMethod = '';
+
+        const dictionary = {
+            kr: { placeholder: "Ekri non ou la...", heading: "Kreye Kont Ou", cours: "Cours en Ligne", booster: "Booster Paj", wa: "Chèn & Followers", travay: "Espas Travay & Afilyasyon", achte: "Achte" },
+            fr: { placeholder: "Entrez votre nom...", heading: "Créer votre Compte", cours: "Cours en Ligne", booster: "Booster Page", wa: "Chaînes & Followers", travay: "Espace Travail & Affiliation", achte: "Achte" },
+            en: { placeholder: "Enter your name...", heading: "Create your Account", cours: "Online Courses", booster: "Page Booster", wa: "Channels & Followers", travay: "Workplace & Affiliate", achte: "Achte" }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('user-name-input').placeholder = dictionary[lang].placeholder;
+            document.getElementById('login-heading').innerText = dictionary[lang].heading;
+            
+            document.getElementById('lbl-cours').innerText = dictionary[lang].cours;
+            document.getElementById('lbl-booster').innerText = dictionary[lang].booster;
+            document.getElementById('lbl-wa').innerText = dictionary[lang].wa;
+            document.getElementById('lbl-travay').innerText = dictionary[lang].travay;
+
+            document.querySelectorAll('.txt-acht').forEach(el => {
+                el.innerText = dictionary[lang].achte;
+            });
+
+            document.getElementById('scr-lang').style.display = 'none';
+            document.getElementById('scr-login').style.display = 'flex';
+        }
+
+        function handleLogin() {
+            const inputVal = document.getElementById('user-name-input').value.trim();
+            if(inputVal !== "") {
+                username = inputVal;
+            }
+            document.getElementById('scr-login').style.display = 'none';
+            document.getElementById('scr-dash').style.display = 'flex';
+            
+            let welcomePrefix = currentLang === 'fr' ? 'Bienvenue' : (currentLang === 'en' ? 'Welcome' : 'Byenveni');
+            document.getElementById('welcome-msg').innerHTML = `<i class="fa-solid fa-circle-user"></i> ${welcomePrefix}, ${username}!`;
+        }
+
+        function changeTheme() {
+            if (document.body.getAttribute('data-theme') === 'light') {
+                document.body.removeAttribute('data-theme');
+                document.getElementById('theme-icon').className = "fa-solid fa-moon";
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                document.getElementById('theme-icon').className = "fa-solid fa-sun";
+            }
+        }
+
+        function openPaymentModal(prodName, price) {
+            selectedProduct = prodName;
+            selectedPrice = price;
+            document.getElementById('payment-details-text').innerHTML = `Sèvis: <b>${prodName}</b><br>Pri: <b>${price}</b>`;
+            document.getElementById('info-payment-box').style.display = 'none';
+            document.getElementById('modal-payment').style.display = 'flex';
+        }
+
+        function openWAPayment() {
+            const qty = document.querySelector('input[name="qty"]:checked').value;
+            selectedProduct = `Chèn WhatsApp (${qty} Followers)`;
+            selectedPrice = "Daprè kantite a";
+            document.getElementById('payment-details-text').innerHTML = `Sèvis: <b>Chèn WhatsApp</b><br>Kantite: <b>${qty} Abòne</b>`;
+            document.getElementById('info-payment-box').style.display = 'none';
+            document.getElementById('modal-payment').style.display = 'flex';
+        }
+
+        function showPaymentInfo(method) {
+            selectedMethod = method;
+            const infoBox = document.getElementById('info-payment-box');
+            const title = document.getElementById('info-title');
+            const inst = document.getElementById('info-instructions');
+            const target = document.getElementById('info-target');
+
+            infoBox.style.display = 'block';
+
+            if (method === 'Natcash') {
+                title.innerHTML = `<i class="fa-solid fa-mobile-screen"></i> Transfè Natcash`;
+                inst.innerText = "Fè transfè a sou nimewo sa a:";
+                target.innerText = "43 59 53 35";
+            } else if (method === 'PayPal') {
+                title.innerHTML = `<i class="fa-brands fa-paypal"></i> Peman PayPal`;
+                inst.innerText = "Voye lajan an (Send as Friends & Family) sou imel sa a:";
+                target.innerText = "G-legacy@gmail.com";
+            } else if (method === 'Card') {
+                title.innerHTML = `<i class="fa-solid fa-credit-card"></i> Visa / MasterCard`;
+                inst.innerText = "Pou peye ak kat kredi, kontakte nou pou n voye lyen sekirize a:";
+                target.innerText = "Peman pa Kat Kredi";
+            }
+        }
+
+        function confirmOrderWithWhatsApp() {
+            document.getElementById('modal-payment').style.display = 'none';
+            const text = `KÒMAND SÈVIS (G-Legacy)\n\n• Kliyan: ${username}\n• Pwodui: ${selectedProduct}\n• Pri: ${selectedPrice}\n• Metòd Peman: ${selectedMethod}\n\nMwen voye mesaj sa a pou mwen ban nou prèv transfè a pou aktivasyon rapid.`;
+            window.open(`https://wa.me/50941231418?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('modal-payment').style.display = 'none';
+        }
+
+        function sendJobForm() {
+            const age = document.getElementById('job-age').value.trim() || "Pa presize";
+            const sex = document.getElementById('job-sex').value;
+            const location = document.getElementById('job-loc').value.trim() || "Pa presize";
+            const timeSlot = document.getElementById('job-time').value;
+            const payMethod = document.getElementById('job-pay').value;
+
+            let jobs = [];
+            document.querySelectorAll('input[name="job-choice"]:checked').forEach(box => {
+                jobs.push(box.value);
+            });
+            if(jobs.length === 0) jobs.push("Okenn");
+
+            const text = `APLIKASYON TRAVAY (G-Legacy)\n\n• Non: ${username}\n• Laj: ${age}\n• Sèks: ${sex}\n• Rete: ${location}\n• Disponibilite: ${timeSlot}\n• Touche ak: ${payMethod}\n• Post travay: ${jobs.join(', ')}`;
+            window.open(`https://wa.me/50941231418?text=${encodeURIComponent(text)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
